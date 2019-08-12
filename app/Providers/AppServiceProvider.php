@@ -28,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.app', function ($view) {
             $view->with('user', Auth::user());
         });
+
+        view()->composer('index', function ($view) {
+            $view->with('user', Auth::user());
+        });
     }
 }

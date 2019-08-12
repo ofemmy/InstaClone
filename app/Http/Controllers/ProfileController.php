@@ -12,11 +12,15 @@ class ProfileController extends Controller
     {
         return view('profile.index', compact('user'));
     }
+
+
     public function create()
     {
         $user = Auth::user();
         return view('profile.create', compact('user'));
     }
+
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -30,8 +34,12 @@ class ProfileController extends Controller
         ]);
         unset($data['name'], $data['email'], $data['username']);
         Auth::user()->profile()->create($data);
-        return redirect('/profile');
+        $user_id = Auth::id();
+        return redirect("/profile/$user_id");
     }
+
+
+
     public function edit()
     {
         return view('profile.edit');

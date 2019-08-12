@@ -33,6 +33,6 @@
     </a>
 </div>
 @endforeach --}}
-<p>placeholder for posts</p>
+<p class="text-align-middle">placeholder for posts</p>
 </div>
 @endsection

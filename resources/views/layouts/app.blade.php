@@ -38,7 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="/profile/{{$user->id}}" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="/profile/{{$user->id ?? ''}}" class="nav-link">Profile</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Posts</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Friends</a></li>
                     </ul>
