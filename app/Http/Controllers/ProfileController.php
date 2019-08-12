@@ -40,8 +40,33 @@ class ProfileController extends Controller
 
 
 
-    public function edit()
+    public function edit(User $user)
     {
-        return view('profile.edit');
+        return view('profile.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'username' => 'required',
+            'bio' => 'sometimes',
+            'website' => 'sometimes',
+            'phone' => 'sometimes',
+            'gender' => 'required',
+        ]);
+        Auth::user()->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+        ]);
+        Auth::user()->profile->update([
+            'bio' => $data['bio'],
+            'website' => $data['website'],
+            'phone' => $data['phone'],
+            'gender' => $data['gender'],
+        ]);
+        return redirect('/profile/' . Auth::id());
     }
 }
