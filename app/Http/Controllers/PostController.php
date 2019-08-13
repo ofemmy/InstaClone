@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -19,14 +20,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateRequest($request);
-        $imagePath = $data['image']->store('uploads', 'public');
+        $imagePath = $data['image']->store('uploads/posts', 'public');
         $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
         $image->save();
         auth()->user()->posts()->create([
             'caption' => $data['caption'],
             'image' => $imagePath,
         ]);
-        return redirect('/home');
+        return redirect('profile/' . Auth::id());
+    }
+
+    public function show(Post $post)
+    {
+
+        return view('posts.show', ['post' => $post]);
     }
 
     protected function validateRequest($request)

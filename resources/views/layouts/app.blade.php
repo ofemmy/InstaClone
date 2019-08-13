@@ -59,6 +59,10 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                @if (auth()->user()->profile->image)
+                                <img src="{{asset('storage/' .Auth::user()->profile->image) }}"
+                                    style="width: 40px; height: 40px; border-radius: 50%;">
+                                @endif
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 

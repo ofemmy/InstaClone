@@ -35,7 +35,7 @@ class ProfileController extends Controller
         //     'gender' => 'required',
         // ]);
         unset($data['name'], $data['email'], $data['username']);
-        $imagePath = $data['image']->store('uploads/profile', 'public');
+        $imagePath = $data['image']->store('uploads/profiles', 'public');
         $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
         $image->save();
         Auth::user()->profile()->create([
@@ -68,7 +68,7 @@ class ProfileController extends Controller
         //     'gender' => 'required',
         // ]);
         $data = $this->validateRequest($request);
-        $imagePath = $data['image']->store('uploads/profile', 'public');
+        $imagePath = $data['image']->store('uploads/profiles', 'public');
         $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
         $image->save();
         Auth::user()->update([
