@@ -24,29 +24,26 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->validateRequest($request);
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required|email',
-        //     'username' => 'required',
-        //     'bio' => 'sometimes',
-        //     'website' => 'sometimes',
-        //     'phone' => 'sometimes',
-        //     'gender' => 'required',
+        /*
+
+            THIS LOGIC IS BEING USED AT REGISTRATION STAGE IN THE REGISTRATION CONTROLLER
+
+            */
+
+        // $data = $this->validateRequest($request);
+        // unset($data['name'], $data['email'], $data['username']);
+        // $imagePath = $data['image']->store('uploads/profiles', 'public');
+        // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        // $image->save();
+        // Auth::user()->profile()->create([
+        //     'bio' => $data['bio'],
+        //     'website' => $data['website'],
+        //     'phone' => $data['phone'],
+        //     'gender' => $data['gender'],
+        //     'image' => $imagePath,
         // ]);
-        unset($data['name'], $data['email'], $data['username']);
-        $imagePath = $data['image']->store('uploads/profiles', 'public');
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
-        $image->save();
-        Auth::user()->profile()->create([
-            'bio' => $data['bio'],
-            'website' => $data['website'],
-            'phone' => $data['phone'],
-            'gender' => $data['gender'],
-            'image' => $imagePath,
-        ]);
-        $user_id = Auth::id();
-        return redirect("/profile/$user_id");
+        // $user_id = Auth::id();
+        // return redirect("/profile/$user_id");
     }
 
 
@@ -58,15 +55,7 @@ class ProfileController extends Controller
 
     public function update(Request $request, User $user)
     {
-        // $data = $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required|email',
-        //     'username' => 'required',
-        //     'bio' => 'sometimes',
-        //     'website' => 'sometimes',
-        //     'phone' => 'sometimes',
-        //     'gender' => 'required',
-        // ]);
+
         $data = $this->validateRequest($request);
         $imagePath = $data['image']->store('uploads/profiles', 'public');
         $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);

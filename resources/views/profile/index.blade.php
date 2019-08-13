@@ -9,7 +9,7 @@
             <h1>{{$user->username}}</h1> <span><a href="/profile/{{$user->id}}/edit">Edit Profile</a></span>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-            <div><strong>{{0}} Posts</strong></div>
+            <div><strong>{{count($user->posts)}} Posts</strong></div>
             <div><strong>22 followers</strong> </div>
             <div><strong>100 following</strong></div>
         </div>

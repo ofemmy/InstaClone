@@ -45,6 +45,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li><a href="{{route('post.create')}}" class="btn btn-primary">New Post</a></li>
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
