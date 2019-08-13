@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use App\User;
 
 class ProfileController extends Controller
@@ -23,17 +24,27 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'username' => 'required',
-            'bio' => 'sometimes',
-            'website' => 'sometimes',
-            'phone' => 'sometimes',
-            'gender' => 'required',
-        ]);
+        $data = $this->validateRequest($request);
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'username' => 'required',
+        //     'bio' => 'sometimes',
+        //     'website' => 'sometimes',
+        //     'phone' => 'sometimes',
+        //     'gender' => 'required',
+        // ]);
         unset($data['name'], $data['email'], $data['username']);
-        Auth::user()->profile()->create($data);
+        $imagePath = $data['image']->store('uploads/profile', 'public');
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        $image->save();
+        Auth::user()->profile()->create([
+            'bio' => $data['bio'],
+            'website' => $data['website'],
+            'phone' => $data['phone'],
+            'gender' => $data['gender'],
+            'image' => $imagePath,
+        ]);
         $user_id = Auth::id();
         return redirect("/profile/$user_id");
     }
@@ -47,15 +58,19 @@ class ProfileController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'username' => 'required',
-            'bio' => 'sometimes',
-            'website' => 'sometimes',
-            'phone' => 'sometimes',
-            'gender' => 'required',
-        ]);
+        // $data = $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'username' => 'required',
+        //     'bio' => 'sometimes',
+        //     'website' => 'sometimes',
+        //     'phone' => 'sometimes',
+        //     'gender' => 'required',
+        // ]);
+        $data = $this->validateRequest($request);
+        $imagePath = $data['image']->store('uploads/profile', 'public');
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        $image->save();
         Auth::user()->update([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -66,7 +81,24 @@ class ProfileController extends Controller
             'website' => $data['website'],
             'phone' => $data['phone'],
             'gender' => $data['gender'],
+            'image' => $imagePath,
         ]);
         return redirect('/profile/' . Auth::id());
+    }
+
+
+    protected function validateRequest($incomingRequest)
+    {
+
+        return $incomingRequest->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'username' => 'required',
+            'bio' => 'sometimes',
+            'website' => 'sometimes',
+            'phone' => 'sometimes',
+            'gender' => 'required',
+            'image' => 'sometimes',
+        ]);
     }
 }

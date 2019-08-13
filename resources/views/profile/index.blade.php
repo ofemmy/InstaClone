@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-4 px-5">
-        <img src="/img/profilepix.jpg" alt="" class="rounded-circle w-100">
+        <img src={{asset('storage/'. $user->profile->image)}} alt="" class="rounded-circle w-100">
     </div>
     <div class="col-md-8 d-flex-column justify-content-center align-items-center">
         <div>
@@ -33,6 +33,15 @@
     </a>
 </div>
 @endforeach --}}
-<p class="text-align-middle">placeholder for posts</p>
+<div class="col-md-4 pb-4">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+    </div>
+</div>
+
 </div>
 @endsection

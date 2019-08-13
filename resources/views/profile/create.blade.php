@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <h3>Getting Started</h3>
-<form action='/profile' method="POST">
+<form action='/profile' method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group row">
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -91,7 +91,7 @@
 
         <div class="col-md-8">
             <textarea id="bio" type="text" class="form-control @error('bio') is-invalid @enderror" name="bio"
-                value="{{ old('bio') }}" required autocomplete="bio" autofocus></textarea>
+                value="{{ old('bio') }}" required autocomplete="bio" autofocus>{{ old('bio') }}</textarea>
 
             @error('bio')
             <span class="invalid-feedback" role="alert">
@@ -111,6 +111,19 @@
                 <option>Female</option>
                 <option>Other</option>
             </select>
+        </div>
+    </div>
+
+    {{-- Profile Image --}}
+    <div class="form-group row">
+        <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Profile Image') }}</label>
+        <div class="col-md-6">
+            <input type="file" class="form-control-file" id="image"
+                class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}"
+                autocomplete="image">
+            @error('image')
+            <strong class="text-danger">{{ $message }}</strong>
+            @enderror
         </div>
     </div>
 

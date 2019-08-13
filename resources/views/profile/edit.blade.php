@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <h3>Edit Profile</h3>
-<form action='/profile/{{$user->id}}' method="POST">
+<form action='/profile/{{$user->id}}' method="POST" enctype="multipart/form-data">
     @csrf
     @method('patch')
     <div class="form-group row">
@@ -113,6 +113,19 @@
                 <option>Female</option>
                 <option>Other</option>
             </select>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Profile Image') }}</label>
+        <div class="col-md-6">
+            <input type="file" class="form-control-file" id="image"
+                class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}"
+                autocomplete="image">
+            @error('image')
+            <strong class="text-danger">{{ $message }}</strong>
+            @enderror
         </div>
     </div>
 
